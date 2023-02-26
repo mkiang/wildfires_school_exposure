@@ -1,0 +1,136 @@
+---
+title: "Table"
+author: "Mathew Kiang"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(error = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+```
+
+```{r data}
+library(tidyverse)
+library(here)
+library(knitr)
+source(here::here("code", "utils.R"))
+
+analytic_df <- readRDS(here::here("data", "analytic_data.RDS"))
+```
+
+```{r process}
+sub_analytic <- analytic_df %>%
+    categorize_school_year() %>%
+    categorize_race() %>%
+    dplyr::mutate(sdays_wf25_gt00 = n_students * wf25_gt00,
+           sdays_wf25_gt05 = n_students * wf25_gt05,
+           sdays_wf25_gt12 = n_students * wf25_gt12,
+           sdays_wf25_gt35 = n_students * wf25_gt35) %>%
+    dplyr::filter(race_recode != "multiracial",
+           race_recode != "hopi") %>%
+    dplyr::filter(school_year != "2005_06")
+
+## School enrollment by race/ethnicity over the whole time period
+enrollment_summary <- sub_analytic %>%
+    dplyr::group_by(race_cat, year_cat) %>%
+    dplyr::summarize(n_students = sum(n_students)) %>%
+    dplyr::group_by(race_cat) %>%
+    dplyr::summarize(
+        total_students = sum(n_students),
+        mean_students = mean(n_students),
+        med_students = stats::median(n_students),
+        sd_students = stats::sd(n_students),
+        p25_students = stats::quantile(n_students, .25),
+        p75_students = stats::quantile(n_students, .75)
+    ) 
+
+## Wildfire exposure at different thresholds over whole time period
+wf_summary <- sub_analytic %>%
+    dplyr::group_by(race_cat, year_cat) %>%
+    dplyr::summarize(
+        sdays_wf25_gt00 = sum(sdays_wf25_gt00, na.rm = TRUE),
+        sdays_wf25_gt05 = sum(sdays_wf25_gt05, na.rm = TRUE),
+        sdays_wf25_gt12 = sum(sdays_wf25_gt12, na.rm = TRUE),
+        sdays_wf25_gt35 = sum(sdays_wf25_gt35, na.rm = TRUE)
+        ) %>%
+    dplyr::group_by(race_cat) %>%
+    dplyr::summarize(
+        total_sdays_gt00 = sum(sdays_wf25_gt00, na.rm = TRUE),
+        total_sdays_gt05 = sum(sdays_wf25_gt05, na.rm = TRUE),
+        total_sdays_gt12 = sum(sdays_wf25_gt12, na.rm = TRUE),
+        total_sdays_gt35 = sum(sdays_wf25_gt35, na.rm = TRUE),
+        mean_sdays_gt00 = mean(sdays_wf25_gt00, na.rm = TRUE),
+        mean_sdays_gt05 = mean(sdays_wf25_gt05, na.rm = TRUE),
+        mean_sdays_gt12 = mean(sdays_wf25_gt12, na.rm = TRUE),
+        mean_sdays_gt35 = mean(sdays_wf25_gt35, na.rm = TRUE),
+        sd_sdays_gt00 = stats::sd(sdays_wf25_gt00, na.rm = TRUE),
+        sd_sdays_gt05 = stats::sd(sdays_wf25_gt05, na.rm = TRUE),
+        sd_sdays_gt12 = stats::sd(sdays_wf25_gt12, na.rm = TRUE),
+        sd_sdays_gt35 = stats::sd(sdays_wf25_gt35, na.rm = TRUE),
+        med_sdays_gt00 = stats::median(sdays_wf25_gt00, na.rm = TRUE),
+        med_sdays_gt05 = stats::median(sdays_wf25_gt05, na.rm = TRUE),
+        med_sdays_gt12 = stats::median(sdays_wf25_gt12, na.rm = TRUE),
+        med_sdays_gt35 = stats::median(sdays_wf25_gt35, na.rm = TRUE),
+        p25_sdays_gt00 = stats::quantile(sdays_wf25_gt00, .25, na.rm = TRUE),
+        p25_sdays_gt05 = stats::quantile(sdays_wf25_gt05, .25, na.rm = TRUE),
+        p25_sdays_gt12 = stats::quantile(sdays_wf25_gt12, .25, na.rm = TRUE),
+        p25_sdays_gt35 = stats::quantile(sdays_wf25_gt35, .25, na.rm = TRUE),
+        p75_sdays_gt00 = stats::quantile(sdays_wf25_gt00, .75, na.rm = TRUE),
+        p75_sdays_gt05 = stats::quantile(sdays_wf25_gt05, .75, na.rm = TRUE),
+        p75_sdays_gt12 = stats::quantile(sdays_wf25_gt12, .75, na.rm = TRUE),
+        p75_sdays_gt35 = stats::quantile(sdays_wf25_gt35, .75, na.rm = TRUE)
+    ) 
+
+# sub_analytic %>%
+#     group_by(race_cat, year_cat) %>%
+#     summarize(
+#         n_students = sum(n_students),
+#         sdays_wf25_gt00 = sum(sdays_wf25_gt00, na.rm = TRUE),
+#         sdays_wf25_gt12 = sum(sdays_wf25_gt12, na.rm = TRUE),
+#         sdays_wf25_gt35 = sum(sdays_wf25_gt35, na.rm = TRUE)
+#     ) %>% 
+#     mutate(
+#         sdays_per_student_wf25_gt00 = sdays_wf25_gt00 / n_students,
+#         sdays_per_student_wf25_gt12 = sdays_wf25_gt12 / n_students,
+#         sdays_per_student_wf25_gt35 = sdays_wf25_gt35 / n_students
+#     ) %>% 
+#     group_by(race_cat) %>% 
+#     summarize(
+#         mean_sdays_per_student_wf25_gt00 = mean(sdays_per_student_wf25_gt00),
+#         mean_sdays_per_student_wf25_gt12 = mean(sdays_per_student_wf25_gt12),
+#         mean_sdays_per_student_wf25_gt35 = mean(sdays_per_student_wf25_gt35), 
+#         sd_sdays_per_student_wf25_gt00 = sd(sdays_per_student_wf25_gt00),
+#         sd_sdays_per_student_wf25_gt12 = sd(sdays_per_student_wf25_gt12),
+#         sd_sdays_per_student_wf25_gt35 = sd(sdays_per_student_wf25_gt35)
+#     )
+
+
+wide_table <- dplyr::left_join(enrollment_summary, wf_summary)
+```
+
+```{r}
+wide_table %>%
+    dplyr::transmute(
+        race_cat, 
+        mean_sd_students = sprintf("%s (%s)",
+                                   prettyNum(round(mean_students), big.mark = ","),
+                                   prettyNum(round(sd_students), big.mark = ",")),
+        wf25_gt05 = sprintf("%s (%s)",
+                            prettyNum(round(mean_sdays_gt05), big.mark = ","),
+                            prettyNum(round(sd_sdays_gt05), big.mark = ",")),
+        wf25_gt12 = sprintf("%s (%s)",
+                            prettyNum(round(mean_sdays_gt12), big.mark = ","),
+                            prettyNum(round(sd_sdays_gt12), big.mark = ",")),
+        wf25_gt35 = sprintf("%s (%s)",
+                            prettyNum(round(mean_sdays_gt35), big.mark = ","),
+                            prettyNum(round(sd_sdays_gt35), big.mark = ","))
+    ) %>% 
+    knitr::kable(
+        format = "html", 
+        col.names = c("Race and Ethnicity", "Student enrollment, Mean (SD)", "PM2.5 > 5", "PM2.5 > 12", "PM2.5 > 35")
+    )
+```
+
