@@ -11,7 +11,7 @@
 
 <meta name="author" content="Mathew Kiang" />
 
-<meta name="date" content="2023-02-26" />
+<meta name="date" content="2023-03-02" />
 
 <title>Table</title>
 
@@ -256,6 +256,7 @@ if (window.hljs) {
 
 
 
+
 <style type="text/css">
 .main-container {
 max-width: 940px;
@@ -276,6 +277,9 @@ outline: none;
 }
 summary {
 display: list-item;
+}
+details > summary > p:only-child {
+display: inline;
 }
 pre code {
 padding: 0;
@@ -354,7 +358,7 @@ display: none;
 
 <h1 class="title toc-ignore">Table</h1>
 <h4 class="author">Mathew Kiang</h4>
-<h4 class="date">2023-02-26</h4>
+<h4 class="date">2023-03-02</h4>
 
 </div>
 
@@ -372,8 +376,8 @@ analytic_df &lt;- readRDS(here::here(&quot;data&quot;, &quot;analytic_data.RDS&q
            sdays_wf25_gt05 = n_students * wf25_gt05,
            sdays_wf25_gt12 = n_students * wf25_gt12,
            sdays_wf25_gt35 = n_students * wf25_gt35) %&gt;%
-    dplyr::filter(race_recode != &quot;multiracial&quot;,
-           race_recode != &quot;hopi&quot;) %&gt;%
+    # dplyr::filter(race_recode != &quot;multiracial&quot;,
+    #        race_recode != &quot;hopi&quot;) %&gt;%
     dplyr::filter(school_year != &quot;2005_06&quot;)
 
 ## School enrollment by race/ethnicity over the whole time period
@@ -563,6 +567,23 @@ NH Black
 </tr>
 <tr>
 <td style="text-align:left;">
+NH Hawaiian or Other Pacific Islander
+</td>
+<td style="text-align:left;">
+31,476 (4,241)
+</td>
+<td style="text-align:left;">
+66,789 (99,656)
+</td>
+<td style="text-align:left;">
+24,832 (45,616)
+</td>
+<td style="text-align:left;">
+9,082 (19,879)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 NH White
 </td>
 <td style="text-align:left;">
@@ -593,6 +614,23 @@ All
 </td>
 <td style="text-align:left;">
 1,578,180 (3,229,438)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+226,295 (37,366)
+</td>
+<td style="text-align:left;">
+625,667 (1,060,145)
+</td>
+<td style="text-align:left;">
+257,146 (500,821)
+</td>
+<td style="text-align:left;">
+94,591 (201,691)
 </td>
 </tr>
 </tbody>

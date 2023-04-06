@@ -29,8 +29,8 @@ sub_analytic <- analytic_df %>%
            sdays_wf25_gt05 = n_students * wf25_gt05,
            sdays_wf25_gt12 = n_students * wf25_gt12,
            sdays_wf25_gt35 = n_students * wf25_gt35) %>%
-    dplyr::filter(race_recode != "multiracial",
-           race_recode != "hopi") %>%
+    # dplyr::filter(race_recode != "multiracial",
+    #        race_recode != "hopi") %>%
     dplyr::filter(school_year != "2005_06")
 
 ## School enrollment by race/ethnicity over the whole time period

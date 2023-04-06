@@ -9,17 +9,22 @@ This repository,
 [`wildfires_school_exposure`](https://github.com/mkiang/wildfires_school_exposure),
 contains reproducible code for our open-access *JAMA Network Open*
 research letter, [“Quantifying exposure to wildfire smoke among
-school-aged children in California, 2006 – 2021”](TODO), which uses
-publicly-available school enrollment [data from the
+school-aged children in California, 2006 –
+2021”](https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2803124),
+which uses publicly-available school enrollment [data from the
 NCES](https://nces.ed.gov/ccd/elsi/) and [wildfire PM2.5
-estimates](https://www.sciencedirect.com/science/article/pii/S0160412022006468?via%3Dihub)
+estimates](https://www.sciencedirect.com/science/article/pii/S0160412022006468)
 to quantify the number of student-days of wildfire smoke exposure among
 California kids. The full citation is:
 
-> Velasquez E, Benmarhnia T, Casey JA, Aguilera R, Kiang MV, Quantifying
+> Velasquez E, Benmarhnia T, Casey JA, Aguilera R, Kiang MV. Quantifying
 > exposure to wildfire smoke among school-aged children in California,
-> 2006 - 2021. *JAMA Network Open*. doi:
-> 10.1001/jamanetworkopen.2023.5863
+> 2006 - 2021. *JAMA Network Open*. 2023;6(4):e235863. doi:
+> [10.1001/jamanetworkopen.2023.5863](https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2803124)
+
+For interested readers, [an invited
+commentary](https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2803129)
+was published along side the letter.
 
 ## About this repository
 
