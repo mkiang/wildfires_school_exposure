@@ -17,9 +17,9 @@ estimates](https://www.sciencedirect.com/science/article/pii/S0160412022006468)
 to quantify the number of student-days of wildfire smoke exposure among
 California kids. The full citation is:
 
-> Velasquez E, Benmarhnia T, Casey JA, Aguilera R, Kiang MV. Quantifying
-> exposure to wildfire smoke among school-aged children in California,
-> 2006 - 2021. *JAMA Network Open*. 2023;6(4):e235863. doi:
+> Velásquez EE, Benmarhnia T, Casey JA, Aguilera R, Kiang MV.
+> Quantifying exposure to wildfire smoke among school-aged children in
+> California, 2006 - 2021. *JAMA Network Open*. 2023;6(4):e235863. doi:
 > [10.1001/jamanetworkopen.2023.5863](https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2803124)
 
 For interested readers, [an invited
@@ -59,7 +59,8 @@ or can be downloaded by running `./code/00_get_data_files.R`.
   [mkiang](https://github.com/mkiang) \|
   ![Twitter](http://i.imgur.com/wWzX9uB.png):
   [@mathewkiang](https://twitter.com/mathewkiang))
-- Esther Velasquez
+- Esther E Velásquez (![Github](http://i.imgur.com/9I6NRUm.png):
+  [evelasq](https://github.com/evelasq))
 
 ## Notes on Reproducibility
 
